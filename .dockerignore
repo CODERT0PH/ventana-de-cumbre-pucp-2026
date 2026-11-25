@@ -1,0 +1,8 @@
+.git
+.venv
+venv
+data
+**/__pycache__
+**/.ipynb_checkpoints
+app/gfs_cache.npz
+app/salidas

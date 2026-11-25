@@ -1,3 +1,52 @@
+# Ventana de Cumbre · Hackathon IA PUCP 2026
+
+> **En construcción.** Este README se reescribe para el producto antes de la entrega (8 dic). Abajo sigue la guía oficial del template.
+
+**Qué es:** el plan de salida hora por hora para una ruta de montaña de la Cordillera Blanca. Nuestro modelo convierte el pronóstico GFS de 27 km en mapas de 3 km de humedad, temperatura y viento, y la app los lee en cada punto de la ruta para decirle al guía a qué hora salir.
+
+## Cómo trabajamos
+
+| Rama | Uso |
+|---|---|
+| `main` | Solo lo entregable. Se actualiza por pull request desde `dev`. |
+| `dev` | Integración del equipo. |
+| `feat/*` | Una rama corta por tarea (`feat/modelo-unet`, `feat/api`, `feat/app`), con PR hacia `dev`. |
+
+```text
+├── src/downscaler/     ← núcleo compartido por el notebook y la app
+│   ├── data.py         ← carga, ventanas t-2..t, holdout y CV por bloques con purga de 48 h
+│   ├── metric.py       ← skill score idéntico al del leaderboard + pesos de pérdida
+│   ├── features.py     ← relieve, viento × pendiente, punto de rocío (solo data oficial)
+│   ├── model.py        ← U-Net de downscaling
+│   └── inference.py    ← normalización/climatología guardables + Downscaler para la app
+├── train/              ← notebooks (el final: submission_notebook.ipynb)
+├── models/             ← modelo_final.pt + artefactos.npz (mismos que el submission)
+├── app/
+│   ├── api/main.py     ← FastAPI: /health, /rutas, /plan
+│   ├── ui/streamlit_app.py
+│   ├── route_plan.py   ← lógica: condiciones por punto, semáforo, mejor hora de salida
+│   ├── rutas/rutas.json
+│   ├── ventana_cumbre.py ← prototipo CLI: semáforo por cumbre (cumbres.json)
+│   └── gfs_forecast.py ← del template, solo para el producto
+├── tests/              ← pytest
+├── Dockerfile · docker-compose.yml · Makefile
+├── requirements.txt          ← producto (Python 3.11, versiones fijas)
+└── requirements-train.txt    ← entrenamiento: GBDT, Optuna, Hyperopt
+```
+
+```bash
+python3.11 -m venv .venv && source .venv/bin/activate
+pip install -r requirements-train.txt    # o requirements.txt si solo vas a correr la app
+make data                                # baja la data de Kaggle a data/
+make test
+make api      # en una terminal
+make app      # en otra · o todo junto: docker-compose up --build
+```
+
+---
+
+<details><summary>Guía oficial del template</summary>
+
 # Hackathon IA PUCP 2026 · Repositorio base
 
 **DSC PUCP × Grupo de Inteligencia Artificial PUCP (IA-PUCP)**
@@ -148,3 +197,5 @@ La data de esta competencia fue reprocesada para el reto: no compares tus result
 DSC PUCP · dsc.pucp@gmail.com · Daniel Malca, organizador · daniel.malca@pucp.edu.pe
 
 Dudas sobre la data o las reglas: en el grupo de participantes.
+
+</details>

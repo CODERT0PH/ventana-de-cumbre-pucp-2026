@@ -18,3 +18,9 @@ venv/
 # Claves y entorno
 .env
 kaggle.json
+
+# Caché del GFS en Docker
+cache/
+
+# Artefactos del modelo final: se versionan (ver models/README.md)
+!models/*.npz

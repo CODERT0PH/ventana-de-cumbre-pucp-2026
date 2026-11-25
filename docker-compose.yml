@@ -1,0 +1,30 @@
+# docker-compose up --build   ->  API en http://localhost:8000 · app en http://localhost:8501
+# Requiere data/static.npz (de Kaggle) y los pesos en models/ (ver README).
+services:
+  api:
+    build: .
+    command: uvicorn app.api.main:app --host 0.0.0.0 --port 8000
+    ports: ["8000:8000"]
+    volumes:
+      - ./data:/repo/data:ro
+      - ./models:/repo/models:ro
+      - gfs-cache:/repo/cache
+    environment:
+      GFS_CACHE: /repo/cache/gfs_cache.npz
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 15s
+      retries: 5
+
+  app:
+    build: .
+    command: streamlit run app/ui/streamlit_app.py --server.address 0.0.0.0 --server.port 8501
+    ports: ["8501:8501"]
+    environment:
+      API_URL: http://api:8000
+    depends_on:
+      api:
+        condition: service_healthy
+
+volumes:
+  gfs-cache:

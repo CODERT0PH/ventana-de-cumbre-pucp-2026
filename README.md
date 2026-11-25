@@ -88,7 +88,18 @@ Prueba el ejemplo de punta a punta (necesita `data/static.npz`):
 python app/ejemplo_producto.py
 ```
 
-Genera `app/salidas/alerta_heladas.png`. Luego reemplaza la función `predecir()` por tu modelo, cargando los pesos de `models/`, y construye tu producto sobre esa base (o reemplázalo por completo).
+Genera `app/salidas/alerta_heladas.png`.
+
+**Ventana de Cumbre** (nuestro producto, en construcción): para cada cumbre de `app/cumbres.json` marca, hora por hora, si las condiciones en la cumbre son buenas, regulares o malas (viento, sensación térmica y humedad) y busca las ventanas para atacar cumbre:
+
+```bash
+python app/ventana_cumbre.py              # próximas 48 h
+python app/ventana_cumbre.py --horas 72
+```
+
+Genera `app/salidas/ventana_cumbre.png` (tablero) y `app/salidas/ventana_cumbre.json` (detalle). Usa la misma `predecir()` de `ejemplo_producto.py`, así que al poner ahí el modelo final el producto lo toma solo.
+
+Luego reemplaza la función `predecir()` por tu modelo, cargando los pesos de `models/`, y construye tu producto sobre esa base (o reemplázalo por completo).
 
 **Usa caché.** Cada descarga de la grilla completa cuenta como ~221 llamadas al plan gratis de Open-Meteo (5,000 por hora). Guarda el resultado y refréscalo cada 1 a 6 horas; no descargues en cada consulta del usuario.
 

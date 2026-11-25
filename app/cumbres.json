@@ -1,0 +1,13 @@
+{
+  "_nota": "Coordenadas y altitudes APROXIMADAS de cumbres de la Cordillera Blanca. Verificarlas antes de la entrega (p. ej. con IGN Perú o Andes Handbook).",
+  "cumbres": [
+    {"nombre": "Huascarán Sur",  "lat": -9.122, "lon": -77.604, "altitud_m": 6768},
+    {"nombre": "Chopicalqui",    "lat": -9.079, "lon": -77.582, "altitud_m": 6354},
+    {"nombre": "Artesonraju",    "lat": -8.950, "lon": -77.630, "altitud_m": 6025},
+    {"nombre": "Alpamayo",       "lat": -8.878, "lon": -77.652, "altitud_m": 5947},
+    {"nombre": "Pisco",          "lat": -9.010, "lon": -77.628, "altitud_m": 5752},
+    {"nombre": "Tocllaraju",     "lat": -9.348, "lon": -77.392, "altitud_m": 6034},
+    {"nombre": "Ishinca",        "lat": -9.385, "lon": -77.413, "altitud_m": 5530},
+    {"nombre": "Vallunaraju",    "lat": -9.430, "lon": -77.440, "altitud_m": 5686}
+  ]
+}

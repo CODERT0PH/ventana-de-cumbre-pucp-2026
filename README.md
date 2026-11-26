@@ -4,6 +4,21 @@
 
 **Qué es:** el plan de salida hora por hora para una ruta de montaña de la Cordillera Blanca. Nuestro modelo convierte el pronóstico GFS de 27 km en mapas de 3 km de humedad, temperatura y viento, y la app los lee en cada punto de la ruta para decirle al guía a qué hora salir.
 
+## Modelo de Kaggle (`train/submission_notebook.ipynb`)
+
+Ensamble de tres modelos que predicen la anomalía respecto a la climatología por hora, entrenados solo con la data oficial:
+
+| Modelo | Score local* |
+|---|---|
+| Starter oficial (referencia) | 0.341 |
+| Ridge sobre la ventana GFS t-2..t | 0.330 |
+| CNN simple / U-Net residual (EMA, pérdida ponderada por la métrica) | ≈0.34 c/u |
+| **Ensamble: 0.35 · Ridge + 0.65 · promedio de 5 redes** | **≈0.375** |
+
+\* Holdout temporal 16–30 jun con purga de 48 h, evaluado cada 3 h como en Kaggle.
+
+Para reproducir el submission: abre el notebook en Kaggle con la data de la competencia y GPU, y dale *Save & Run All*. Se generan `submission.csv` y los pesos en `modelos/`. Con `VALIDAR = True` imprime antes el score local.
+
 ## Cómo trabajamos
 
 | Rama | Uso |
